@@ -17,11 +17,11 @@ from colorama import Fore, Back, Style
 
 def rmtree_onerror(self, func, file_path, exc_info):
     """
-    Error handler for ``shutil.rmtree``.
+    Error handler for "shutil.rmtree".
     If the error is due to an access error (read only file)
     it attempts to add write permission and then retries.
     If the error is for another reason it re-raises the error.
-    Usage : ``shutil.rmtree(path, onerror=onerror)`` 
+    Usage : "shutil.rmtree(path, onerror=onerror)"
     """
     logging.warning(str(exc_info))
     logging.warning("rmtree error,check the file exists or try to chmod the file,then retry rmtree action.")
