@@ -149,12 +149,10 @@ def build(rust_version,cargoFeatures,release=False):
                 execute_shell(["rustup", "target", "add", target],
                    shell=False,
                    silent=True,
-                   #cwd="vendor/rustelo-rust")
                    cwd="buffett2")
 
             profile = "--release" if release else ''
             execute_shell(f"cargo build --all --target {target} {profile}",
-               #cwd="vendor/rustelo-rust",
                cwd="buffett2",
                env={
                    "CC": f"{prefix[target]}gcc",
@@ -168,7 +166,6 @@ def build(rust_version,cargoFeatures,release=False):
 
             else:
                 execute_shell(f"{prefix[target]}strip --strip-unneeded -d -x {artifact[target]}",
-                   #cwd=f"vendor/rustelo-rust/target/{target}/release")
                    cwd=f"vendor/rustelo-rust/soros/target/{target}/release")
 
             #copy2(f"vendor/rustelo-rust/target/{target}/release/{artifact[target]}", f"libs/{target}/")
@@ -285,7 +282,7 @@ def deploy_bin(target):
         os.remove("/etc/systemd/system/soros-validator.socket")
 
     # cp the service files into service folder
-    # execute_shell("cp soros.service.template/*  /etc/systemd/system")
+    execute_shell("cp morgan.service.template/*  /etc/systemd/system")
 
     if os.path.exists("/bitconch/morgan"):
         prnt_run("Remove previous installed version")
@@ -304,12 +301,12 @@ parser.add_argument(
 
 argv = parser.parse_args(sys.argv[1:])
 
-#add_submodules()
+add_submodules()
 #update_submodules()
 build("1.35","erasure",release=argv.release)
 prnt_run("Update PATH")
 # execute_shell(f"source ~/.profile")
-prnt_run("Please run /usr/bin/bitconch/morgan/demo/setup.sh")
+prnt_run("Please run /bitconch/morgan/demo/setup.sh")
 
 # Setup the boot leader with stake of 500K dif
 if click.confirm('Do you want to run setup to create genesis file and id files?', default=True):
@@ -333,4 +330,3 @@ if click.confirm('Are you running on the leader node?', default=True):
 
 if argv.commit and argv.release:
     commit()
-
