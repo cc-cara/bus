@@ -214,11 +214,9 @@ def build(rust_version,cargoFeatures,release=False):
         ]
 
         for crate in BIN_CRATES:
-            # execute_shell(f"set -x && cargo  install --force --path '{crate}' --root '{pwd}/libs/{target}/'  --features='erasure'", cwd="vendor/rustelo-rust/soros")
             execute_shell(f"set -x && cargo  install --force --path '{crate}' --root '{pwd}/libs/{target}/'  --features='erasure'", cwd="./vendor/morgan")
 
         # copy dependencies into deps folder
-        # execute_shell(f"set -x && cp *.so {pwd}/libs/{target}/bin/deps",cwd="vendor/rustelo-rust/soros/target/release")
         execute_shell(f"set -x && cp libmorgan*.so {pwd}/libs/{target}/bin/deps",cwd="./vendor/morgan/target/release/deps")
 
 
